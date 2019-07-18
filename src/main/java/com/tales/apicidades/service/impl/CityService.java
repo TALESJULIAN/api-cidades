@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.tales.apicidades.entity.City;
 import com.tales.apicidades.model.CityModel;
+import com.tales.apicidades.model.GeoCoordinate;
 import com.tales.apicidades.model.StateModel;
 import com.tales.apicidades.service.interfaces.ICityService;
 
@@ -66,7 +67,7 @@ public class CityService implements ICityService{
 	}
 
 	@Override
-	public List<City> filterCsvColumn(String column) {
+	public List<City> filterCsvColumn(String column, String value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,8 +80,11 @@ public class CityService implements ICityService{
 
 	@Override
 	public Double getMaxDistance() {
-		// TODO Auto-generated method stub
-		return null;
+		GeoCoordinate cityOne = new GeoCoordinate(-20.81972,
+				-49.37944);
+		GeoCoordinate cityTwo = new GeoCoordinate(-20.42278, -49.97278);
+				double distance = cityOne.distanceInKm(CityTwo);
+		return distance;
 	}
 
 }

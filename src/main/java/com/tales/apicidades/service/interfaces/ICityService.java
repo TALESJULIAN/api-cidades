@@ -31,7 +31,7 @@ public interface ICityService {
 	
 	void removeCity(City city);
 	
-	List<City> filterCsvColumn(String column);
+	List<City> filterCsvColumn(String column, String value);
 	
 	CityModel findAllCities();
 	

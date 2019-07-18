@@ -18,8 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+
 import com.tales.apicidades.batch.listener.JobCompletionNotificationListener;
-import com.tales.apicidades.batch.validate.CityValidate;
+import com.tales.apicidades.batch.model.CityIO;
 import com.tales.apicidades.processor.CityItemProcessor;
 
 /**
@@ -41,20 +42,20 @@ public class BatchConfiguration {
 	public DataSource dataSource;
 	
 	@Bean
-    public FlatFileItemReader<CityValidate> reader() {
-        FlatFileItemReader<CityValidate> reader = new FlatFileItemReader<>();
+    public FlatFileItemReader<CityIO> reader() {
+        FlatFileItemReader<CityIO> reader = new FlatFileItemReader<>();
         reader.setResource(new ClassPathResource("Desafio Cidades - Back End.csv"));
         reader.setLinesToSkip(1);
-        reader.setLineMapper(new DefaultLineMapper<CityValidate>() {
+        reader.setLineMapper(new DefaultLineMapper<CityIO>() {
             {
             setLineTokenizer(new DelimitedLineTokenizer() {
                 {
                 setNames(new String[]{"ibge_id", "uf", "name", "capital", "lon", "lat", "no_accents", "alternative_names", "microregion", "mesoregion"});
                 }
             });
-            setFieldSetMapper(new BeanWrapperFieldSetMapper<CityValidate>() {
+            setFieldSetMapper(new BeanWrapperFieldSetMapper<CityIO>() {
                 {
-                setTargetType(CityValidate.class);
+                setTargetType(CityIO.class);
                 }
             });
             }
@@ -68,8 +69,8 @@ public class BatchConfiguration {
     }
 	
 	@Bean
-    public JdbcBatchItemWriter<CityValidate> writer() {		
-        JdbcBatchItemWriter<CityValidate> writer = new JdbcBatchItemWriter<>();
+    public JdbcBatchItemWriter<CityIO> writer() {		
+        JdbcBatchItemWriter<CityIO> writer = new JdbcBatchItemWriter<>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         writer.setSql("INSERT INTO city (ibge_id, uf, name, capital, lon, lat, no_accents, alternative_names, microregion, mesoregion) "
         		+ "VALUES "
@@ -91,7 +92,7 @@ public class BatchConfiguration {
 	@Bean
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .<CityValidate, CityValidate>chunk(10)
+                .<CityIO, CityIO>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())

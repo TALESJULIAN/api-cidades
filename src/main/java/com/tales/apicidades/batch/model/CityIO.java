@@ -1,6 +1,6 @@
-package com.tales.apicidades.batch.validate;
+package com.tales.apicidades.batch.model;
 
-public class CityValidate {
+public class CityIO {
 
 	private String id;
 	private String ibge_id;
@@ -14,7 +14,7 @@ public class CityValidate {
 	private String microregion;
 	private String mesoregion;
 	
-	public CityValidate() {
+	public CityIO() {
 		
 	}
 	
@@ -31,7 +31,7 @@ public class CityValidate {
 	 * @param microregion2
 	 * @param mesoregion2
 	 */
-	public CityValidate(String ibge_id2, String uf2, String name2, boolean capital2, 
+	public CityIO(String ibge_id2, String uf2, String name2, boolean capital2, 
 			String lon2, String lat2, String no_accents2, String alternative_names2, String microregion2, String mesoregion2) {
 	}
 	
@@ -128,7 +128,7 @@ public class CityValidate {
 
 	@Override
 	public String toString() {
-			return "Cidade [id=" + id + ", ibge_id=" + ibge_id + ", uf=" + uf + ", name=" + name + ", capital=" + capital					+ ", lon=" + lon + ", lat=" + lat + ", no_accents=" + no_accents + ", alternative_names="
+			return "CityIO [id=" + id + ", ibge_id=" + ibge_id + ", uf=" + uf + ", name=" + name + ", capital=" + capital					+ ", lon=" + lon + ", lat=" + lat + ", no_accents=" + no_accents + ", alternative_names="
 				+ alternative_names + ", microregion=" + microregion + ", mesoregion=" + mesoregion + "]";
 	}		
 }
