@@ -18,6 +18,9 @@ public class CityModel {
 	private String microregion;
 	private String mesoregion;
 	
+	public CityModel() {
+		
+	}
 	
 	/**
 	 * 

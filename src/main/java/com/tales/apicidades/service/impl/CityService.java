@@ -1,7 +1,7 @@
 package com.tales.apicidades.service.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tales.apicidades.entity.City;
@@ -19,11 +19,9 @@ import com.tales.apicidades.service.interfaces.ICityService;
 @Service
 public class CityService implements ICityService{
 	
-	@Autowired
-	private Map<City, City> mapCityMaxDistance;
+	private LinkedHashMap<City, City> mapCityMaxDistance;
 	
-	@Autowired
-	private Map<City, City> mapCityMinDistance;
+	private LinkedHashMap<City, City> mapCityMinDistance;
 	
 	private Double maxDistance;
 	
@@ -37,6 +35,19 @@ public class CityService implements ICityService{
 	
 	@Autowired
 	private ICityRepository cityRepository;
+
+	@Autowired
+	private City city1;
+	
+	@Autowired
+	private City city2;
+	
+	public CityService() {
+		setCity1(new City());
+		setCity2(new City());
+		this.mapCityMaxDistance = new LinkedHashMap<>();
+		this.mapCityMinDistance = new LinkedHashMap<>();			
+	}
 
 	@Override
 	public List<City> getCapitalCitiesOrderByName() {
@@ -127,38 +138,6 @@ public class CityService implements ICityService{
 	}
 
 	/**
-	 * @return the mapCityMaxDistance
-	 */
-	public Map<City, City> getMapCityMaxDistance() {
-		return mapCityMaxDistance;
-	}
-
-	/**
-	 * 
-	 * @param city1
-	 * @param city2
-	 */
-	public void setMapCityMaxDistance(City city1, City city2) {
-		this.mapCityMaxDistance.put(city1, city2);
-	}
-
-	/**
-	 * @return the mapCityMinDistance
-	 */
-	public Map<City, City> getMapCityMinDistance() {
-		return mapCityMinDistance;
-	}
-
-	/**
-	 * 
-	 * @param city1
-	 * @param city2
-	 */
-	public void setMapCityMinDistance(City city1, City city2) {
-		this.mapCityMinDistance.put(city1, city2);
-	}
-
-	/**
 	 * @return the maxDistance
 	 */
 	public Double getMaxDistance() {
@@ -166,24 +145,10 @@ public class CityService implements ICityService{
 	}
 
 	/**
-	 * 
-	 */
-	public void setMaxDistance() {
-		getMaxDistance();
-	}
-
-	/**
 	 * @return the minDistance
 	 */
 	public Double getMinDistance() {
 		return minDistance;
-	}
-
-	/**
-	 * 
-	 */
-	public void setMinDistance() {
-		getMinDistance();
 	}
 
 	/**
@@ -228,4 +193,20 @@ public class CityService implements ICityService{
 		this.cityRepository = cityRepository;
 	}
 
+	public City getCity1() {
+		return city1;
+	}
+
+	public void setCity1(City city1) {
+		this.city1 = city1;
+	}
+
+	public City getCity2() {
+		return city2;
+	}
+
+	public void setCity2(City city2) {
+		this.city2 = city2;
+	}
+	
 }

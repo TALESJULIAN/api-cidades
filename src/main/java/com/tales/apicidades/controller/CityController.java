@@ -1,9 +1,9 @@
 package com.tales.apicidades.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tales.apicidades.service.impl.CityService;
 
 /**
@@ -13,11 +13,13 @@ import com.tales.apicidades.service.impl.CityService;
  */
 @RestController
 @RequestMapping("/city")
+@CrossOrigin(origins = "*")
 public class CityController {
 	
 	@SuppressWarnings("unused")
 	@Autowired
 	private CityService cityService;
+	
 	
 	
 }

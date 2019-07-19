@@ -205,6 +205,11 @@ public class City implements Serializable{
 		this.microregion = microregion;
 		this.mesoregion = mesoregion;
 	}
+	
+	public City() {
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
