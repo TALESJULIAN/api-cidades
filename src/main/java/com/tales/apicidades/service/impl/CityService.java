@@ -1,12 +1,9 @@
 package com.tales.apicidades.service.impl;
 
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.tales.apicidades.dtos.CityDTO;
 import com.tales.apicidades.dtos.GeoCoordinateDTO;
 import com.tales.apicidades.dtos.StateDTO;
@@ -54,7 +51,7 @@ public class CityService implements ICityService{
 
 	@Override
 	public List<City> getCapitalCitiesOrderByName() {
-		return this.cityRepository.getCapitalCitiesOrderByName(true);
+		return this.cityRepository.findByCapital(Boolean.TRUE);
 	}
 
 	@Override
@@ -89,15 +86,18 @@ public class CityService implements ICityService{
 	}
 
 	@Override
-	public void removeCity(Integer ibgeId) {
+	public boolean removeCity(Integer ibgeId) {
+		boolean deleted = false;
 		City city = new City();
 		try {
 			city = cityRepository.findByIbgeId(ibgeId);
 			this.cityRepository.delete(city);
+			deleted = true;
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 		}
+		return deleted;
 	}
 
 	@Override
@@ -111,6 +111,11 @@ public class CityService implements ICityService{
 		return this.cityRepository.findAll();
 	}
 
+	@Override
+	public Integer getQtdeRecords() {
+		return this.cityRepository.findAll().size();
+	}
+	
 	@Override
 	public void getDistance(City city1, City city2) {
 		GeoCoordinateDTO cityOne = new GeoCoordinateDTO(city1.getLat(),
@@ -147,6 +152,8 @@ public class CityService implements ICityService{
 		}
 	}
 
+	
+	
 	/**
 	 * @return the maxDistance
 	 */

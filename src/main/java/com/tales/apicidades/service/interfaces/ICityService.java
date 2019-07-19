@@ -28,11 +28,13 @@ public interface ICityService {
 	
 	City saveCity(City city);
 	
-	void removeCity(Integer ibgeId);
+	boolean removeCity(Integer ibgeId);
 	
 	List<City> filterCsvColumn(String column, String value);
 	
 	List<City> findAllCities();
+	
+	Integer getQtdeRecords();
 	
 	void getDistance(City city1, City city2);
 }

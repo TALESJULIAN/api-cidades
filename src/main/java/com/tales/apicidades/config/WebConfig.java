@@ -3,7 +3,6 @@ package com.tales.apicidades.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
 import com.tales.apicidades.dtos.CityDTO;
 import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
