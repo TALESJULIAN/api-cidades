@@ -18,6 +18,7 @@ public class CityModel {
 	private String microregion;
 	private String mesoregion;
 	
+	
 	/**
 	 * 
 	 * @param ibge_id

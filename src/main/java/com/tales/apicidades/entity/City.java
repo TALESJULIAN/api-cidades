@@ -28,7 +28,7 @@ public class City implements Serializable{
 	private Long id;
 	
 	@Column(name = "ibge_id")
-	private Integer ibge_id;
+	private Integer ibgeId;
 	
 	@Column(name = "uf")
 	private String uf;
@@ -60,14 +60,14 @@ public class City implements Serializable{
 	/**
 	 * @return the ibge_id
 	 */
-	public Integer getIbge_id() {
-		return ibge_id;
+	public Integer getIbgeId() {
+		return ibgeId;
 	}
 	/**
 	 * @param ibge_id the ibge_id to set
 	 */
-	public void setIbge_id(Integer ibge_id) {
-		this.ibge_id = ibge_id;
+	public void setIbge_id(Integer ibgeId) {
+		this.ibgeId = ibgeId;
 	}
 	/**
 	 * @return the uf
@@ -194,7 +194,7 @@ public class City implements Serializable{
 	public City(Integer ibge_id, String uf, String name, Boolean capital, Double lon, Double lat, String no_accents,
 			String alternative_names, String microregion, String mesoregion) {
 		super();
-		this.ibge_id = ibge_id;
+		this.ibgeId = ibge_id;
 		this.uf = uf;
 		this.name = name;
 		this.capital = capital;
@@ -214,7 +214,7 @@ public class City implements Serializable{
 		int result = 1;
 		result = prime * result + ((alternative_names == null) ? 0 : alternative_names.hashCode());
 		result = prime * result + ((capital == null) ? 0 : capital.hashCode());
-		result = prime * result + ((ibge_id == null) ? 0 : ibge_id.hashCode());
+		result = prime * result + ((ibgeId == null) ? 0 : ibgeId.hashCode());
 		result = prime * result + ((lat == null) ? 0 : lat.hashCode());
 		result = prime * result + ((lon == null) ? 0 : lon.hashCode());
 		result = prime * result + ((mesoregion == null) ? 0 : mesoregion.hashCode());
@@ -246,10 +246,10 @@ public class City implements Serializable{
 				return false;
 		} else if (!capital.equals(other.capital))
 			return false;
-		if (ibge_id == null) {
-			if (other.ibge_id != null)
+		if (ibgeId == null) {
+			if (other.ibgeId != null)
 				return false;
-		} else if (!ibge_id.equals(other.ibge_id))
+		} else if (!ibgeId.equals(other.ibgeId))
 			return false;
 		if (lat == null) {
 			if (other.lat != null)
@@ -293,7 +293,7 @@ public class City implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "City [ibge_id=" + ibge_id + ", uf=" + uf + ", name=" + name + ", capital=" + capital
+		return "City [ibge_id=" + ibgeId + ", uf=" + uf + ", name=" + name + ", capital=" + capital
 				+ ", lon=" + lon + ", lat=" + lat + ", no_accents=" + no_accents + ", alternative_names="
 				+ alternative_names + ", microregion=" + microregion + ", mesoregion=" + mesoregion + "]";
 	}

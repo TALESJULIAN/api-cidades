@@ -2,9 +2,7 @@ package com.tales.apicidades.service.interfaces;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-
 import com.tales.apicidades.entity.City;
-import com.tales.apicidades.model.CityModel;
 import com.tales.apicidades.model.StateModel;
 
 /**
@@ -23,7 +21,7 @@ public interface ICityService {
 	
 	Integer getNumberCitiesPerState(String uf);
 	
-	City findByIbgeId(Integer ibge);
+	City findByIbgeId(Integer ibgeId);
 	
 	List<City> getCitiesPerState(String uf);
 	
@@ -33,7 +31,7 @@ public interface ICityService {
 	
 	List<City> filterCsvColumn(String column, String value);
 	
-	CityModel findAllCities();
+	List<City> findAllCities();
 	
-	Double getMaxDistance();
+	void getDistance(City city1, City city2);
 }
