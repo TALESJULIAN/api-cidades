@@ -14,8 +14,8 @@ import com.tales.apicidades.entity.City;
  *
  */
 @NamedQueries({
-	@NamedQuery(name = "ICityRepository.findTopByCapitalOrderByNameAsc",
-			query = "SELECT c FROM city c WHERE c.capital = :isCapital ORDER BY c.uf"),
+		@NamedQuery(name = "ICityRepository.getCapitalCitiesOrderByName",
+		query = "SELECT cid FROM Cidade cid WHERE cid.captal = :isCapital ORDER BY cid.uf")
 })
 
 @Repository
@@ -26,5 +26,7 @@ public interface ICityRepository extends JpaRepository<City, Long>{
 	List<City> getCapitalCitiesOrderByName(@Param("isCapital") Boolean capital);
 	
 	List<City> findByUf(String uf);
+	
+	Long countByUf(String uf);
 	
 }

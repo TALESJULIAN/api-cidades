@@ -1,7 +1,9 @@
 package com.tales.apicidades.service.impl;
 
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +31,10 @@ public class CityService implements ICityService{
 	private Double minDistance;
 	
 	@Autowired
-	private StateDTO stateModel;
+	private StateDTO stateDto;
 	
 	@Autowired
-	private CityDTO cityModel;
+	private CityDTO cityDto;
 	
 	@Autowired
 	private ICityRepository cityRepository;
@@ -87,8 +89,15 @@ public class CityService implements ICityService{
 	}
 
 	@Override
-	public void removeCity(City city) {
-		this.cityRepository.delete(city);
+	public void removeCity(Integer ibgeId) {
+		City city = new City();
+		try {
+			city = cityRepository.findByIbgeId(ibgeId);
+			this.cityRepository.delete(city);
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
@@ -153,31 +162,31 @@ public class CityService implements ICityService{
 	}
 
 	/**
-	 * @return the stateModel
+	 * @return the stateDto
 	 */
-	public StateDTO getStateModel() {
-		return stateModel;
+	public StateDTO getStateDto() {
+		return stateDto;
 	}
 
 	/**
-	 * @param stateModel the stateModel to set
+	 * @param stateDto the stateDto to set
 	 */
-	public void setStateModel(StateDTO stateModel) {
-		this.stateModel = stateModel;
+	public void setStateDto(StateDTO stateDto) {
+		this.stateDto = stateDto;
 	}
 
 	/**
-	 * @return the cityModel
+	 * @return the cityDto
 	 */
-	public CityDTO getCityModel() {
-		return cityModel;
+	public CityDTO getCityDto() {
+		return cityDto;
 	}
 
 	/**
-	 * @param cityModel the cityModel to set
+	 * @param cityDto the cityDto to set
 	 */
-	public void setCityModel(CityDTO cityModel) {
-		this.cityModel = cityModel;
+	public void setCityDto(CityDTO cityDto) {
+		this.cityDto = cityDto;
 	}
 
 	/**
@@ -208,6 +217,27 @@ public class CityService implements ICityService{
 
 	public void setCity2(City city2) {
 		this.city2 = city2;
+	}
+	
+	/**
+	 * 
+	 * @param city
+	 * @return cityDTO
+	 */
+	public CityDTO convertCity(City city) {
+		CityDTO cityDto = new CityDTO();
+		cityDto.setIbge_id(city.getIbgeId());
+		cityDto.setName(city.getName());
+		cityDto.setUf(city.getUf());
+		cityDto.setCapital(city.getCapital());
+		cityDto.setLat(city.getLat());
+		cityDto.setLon(city.getLon());
+		cityDto.setAlternative_names(city.getAlternative_names());
+		cityDto.setNo_accents(city.getNo_accents());
+		cityDto.setMesoregion(city.getMesoregion());
+		cityDto.setMicroregion(city.getMicroregion());
+		
+		return cityDto;
 	}
 	
 }

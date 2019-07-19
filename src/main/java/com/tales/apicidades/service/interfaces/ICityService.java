@@ -28,7 +28,7 @@ public interface ICityService {
 	
 	City saveCity(City city);
 	
-	void removeCity(City city);
+	void removeCity(Integer ibgeId);
 	
 	List<City> filterCsvColumn(String column, String value);
 	

@@ -22,12 +22,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
-	public StateDTO stateModel() {
+	public StateDTO stateDto() {
 		return new StateDTO();
 	}
 	
 	@Bean
-	public CityDTO cityModel() {
+	public CityDTO cityDto() {
 		return new CityDTO();
 	}
 
