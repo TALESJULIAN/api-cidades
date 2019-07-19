@@ -2,7 +2,7 @@ package com.tales.apicidades.utils;
 
 import org.springframework.stereotype.Component;
 
-import com.tales.apicidades.model.GeoCoordinate;
+import com.tales.apicidades.dtos.GeoCoordinateDTO;
 
 @Component
 public class GeoUtils {
@@ -45,8 +45,8 @@ public class GeoUtils {
 	 * @param second
 	 * @return Distance between two geo points
 	 */
-	public static Double geoDistanceInKm(GeoCoordinate first,
-			GeoCoordinate second) {
+	public static Double geoDistanceInKm(GeoCoordinateDTO first,
+			GeoCoordinateDTO second) {
 		return geoDistanceInKm(first.getLatitude(), first.getLongitude(),
 				second.getLatitude(), second.getLongitude());
 	}

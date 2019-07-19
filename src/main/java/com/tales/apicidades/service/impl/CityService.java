@@ -4,10 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.tales.apicidades.dtos.CityDTO;
+import com.tales.apicidades.dtos.GeoCoordinateDTO;
+import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
-import com.tales.apicidades.model.CityModel;
-import com.tales.apicidades.model.GeoCoordinate;
-import com.tales.apicidades.model.StateModel;
 import com.tales.apicidades.repositories.interfaces.ICityRepository;
 import com.tales.apicidades.service.interfaces.ICityService;
 
@@ -28,10 +29,10 @@ public class CityService implements ICityService{
 	private Double minDistance;
 	
 	@Autowired
-	private StateModel stateModel;
+	private StateDTO stateModel;
 	
 	@Autowired
-	private CityModel cityModel;
+	private CityDTO cityModel;
 	
 	@Autowired
 	private ICityRepository cityRepository;
@@ -55,12 +56,12 @@ public class CityService implements ICityService{
 	}
 
 	@Override
-	public StateModel getMaxUfState() {
+	public StateDTO getMaxUfState() {
 		return this.getMaxUfState();
 	}
 
 	@Override
-	public StateModel getMinUfState() {
+	public StateDTO getMinUfState() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -103,9 +104,9 @@ public class CityService implements ICityService{
 
 	@Override
 	public void getDistance(City city1, City city2) {
-		GeoCoordinate cityOne = new GeoCoordinate(city1.getLat(),
+		GeoCoordinateDTO cityOne = new GeoCoordinateDTO(city1.getLat(),
 				city1.getLon());
-		GeoCoordinate cityTwo = new GeoCoordinate(city2.getLat(), city2.getLon());
+		GeoCoordinateDTO cityTwo = new GeoCoordinateDTO(city2.getLat(), city2.getLon());
 				double distance = cityOne.distanceInKm(cityTwo);
 		//Set max distance 
 		if(this.maxDistance == null || this.maxDistance == 0) {
@@ -154,28 +155,28 @@ public class CityService implements ICityService{
 	/**
 	 * @return the stateModel
 	 */
-	public StateModel getStateModel() {
+	public StateDTO getStateModel() {
 		return stateModel;
 	}
 
 	/**
 	 * @param stateModel the stateModel to set
 	 */
-	public void setStateModel(StateModel stateModel) {
+	public void setStateModel(StateDTO stateModel) {
 		this.stateModel = stateModel;
 	}
 
 	/**
 	 * @return the cityModel
 	 */
-	public CityModel getCityModel() {
+	public CityDTO getCityModel() {
 		return cityModel;
 	}
 
 	/**
 	 * @param cityModel the cityModel to set
 	 */
-	public void setCityModel(CityModel cityModel) {
+	public void setCityModel(CityDTO cityModel) {
 		this.cityModel = cityModel;
 	}
 

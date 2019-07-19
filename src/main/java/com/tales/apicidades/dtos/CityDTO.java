@@ -1,11 +1,11 @@
-package com.tales.apicidades.model;
+package com.tales.apicidades.dtos;
 
 /**
  * 
  * @author Tales
  *
  */
-public class CityModel {
+public class CityDTO {
 
 	private Integer ibge_id;
 	private String uf;
@@ -18,7 +18,7 @@ public class CityModel {
 	private String microregion;
 	private String mesoregion;
 	
-	public CityModel() {
+	public CityDTO() {
 		
 	}
 	
@@ -35,7 +35,7 @@ public class CityModel {
 	 * @param microregion
 	 * @param mesoregion
 	 */
-	public CityModel(Integer ibge_id, String uf, String name, Boolean capital, Double lon, Double lat,
+	public CityDTO(Integer ibge_id, String uf, String name, Boolean capital, Double lon, Double lat,
 			String no_accents, String alternative_names, String microregion, String mesoregion) {
 		super();
 		this.ibge_id = ibge_id;
@@ -199,7 +199,7 @@ public class CityModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CityModel other = (CityModel) obj;
+		CityDTO other = (CityDTO) obj;
 		if (alternative_names == null) {
 			if (other.alternative_names != null)
 				return false;

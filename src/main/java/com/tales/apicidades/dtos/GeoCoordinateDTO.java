@@ -1,8 +1,8 @@
-package com.tales.apicidades.model;
+package com.tales.apicidades.dtos;
 
 import com.tales.apicidades.utils.GeoUtils;
 
-public class GeoCoordinate {
+public class GeoCoordinateDTO {
 
 	private Double latitude;
 	
@@ -13,7 +13,7 @@ public class GeoCoordinate {
 	 * @param latitude
 	 * @param longitude
 	 */
-	public GeoCoordinate(Double latitude, Double longitude) {
+	public GeoCoordinateDTO(Double latitude, Double longitude) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -44,13 +44,13 @@ public class GeoCoordinate {
 	 * @param coordinate
 	 * @return Distance between two geo points
 	 */
-	public Double distanceInKm(GeoCoordinate coordinate) {
+	public Double distanceInKm(GeoCoordinateDTO coordinate) {
 		return GeoUtils.geoDistanceInKm(this, coordinate);
 	}
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return new GeoCoordinate(this.getLatitude(), this.getLatitude());
+		return new GeoCoordinateDTO(this.getLatitude(), this.getLatitude());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class GeoCoordinate {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GeoCoordinate other = (GeoCoordinate) obj;
+		GeoCoordinateDTO other = (GeoCoordinateDTO) obj;
 		if (Double.doubleToLongBits(latitude) != Double
 				.doubleToLongBits(other.latitude))
 			return false;

@@ -2,8 +2,9 @@ package com.tales.apicidades.service.interfaces;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+
+import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
-import com.tales.apicidades.model.StateModel;
 
 /**
  * 
@@ -15,9 +16,9 @@ public interface ICityService {
 	
 	List<City> getCapitalCitiesOrderByName();
 	
-	StateModel getMaxUfState();
+	StateDTO getMaxUfState();
 	
-	StateModel getMinUfState();
+	StateDTO getMinUfState();
 	
 	Integer getNumberCitiesPerState(String uf);
 	

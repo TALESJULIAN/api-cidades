@@ -1,16 +1,16 @@
-package com.tales.apicidades.model;
+package com.tales.apicidades.dtos;
 
 /**
  * 
  * @author Tales
  *
  */
-public class StateModel {
+public class StateDTO {
 
 	private String uf;
 	private Integer numberOfCities;
 	
-	public StateModel() {
+	public StateDTO() {
 		
 	}
 	
@@ -19,7 +19,7 @@ public class StateModel {
 	 * @param uf
 	 * @param numberOfCities
 	 */
-	public StateModel(String uf, Integer numberOfCities) {
+	public StateDTO(String uf, Integer numberOfCities) {
 		super();
 		this.uf = uf;
 		this.numberOfCities = numberOfCities;
@@ -72,7 +72,7 @@ public class StateModel {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		StateModel other = (StateModel) obj;
+		StateDTO other = (StateDTO) obj;
 		if (numberOfCities == null) {
 			if (other.numberOfCities != null)
 				return false;

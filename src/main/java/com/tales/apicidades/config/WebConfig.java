@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.tales.apicidades.dtos.CityDTO;
+import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
-import com.tales.apicidades.model.CityModel;
-import com.tales.apicidades.model.StateModel;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
@@ -22,13 +22,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
-	public StateModel stateModel() {
-		return new StateModel();
+	public StateDTO stateModel() {
+		return new StateDTO();
 	}
 	
 	@Bean
-	public CityModel cityModel() {
-		return new CityModel();
+	public CityDTO cityModel() {
+		return new CityDTO();
 	}
 
 }
