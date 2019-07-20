@@ -18,3 +18,15 @@ A empresa XPTO Systems precisa construir um sistema web para leitura e manutenç
 12. Dentre todas as cidades, obter as duas cidades mais distantes uma da outra com base na localização (distância em KM em linha reta); OK
 
 O código fonte deve ser comitado no GitHub, por favor nos passe sua conta para acompanharmos. 
+
+Autor: 
+Tales Julian Leite
+
+Especificações do projeto:
+
+- Não é necessário realizar nenhuma configuração, apenas copiar o projeto e executá-lo através do spring boot ou maven.
+- O projeto ao ser iniciado, inicia a leitura do arquivo CSV através de um job de arquivo em lotes(batch) e seus dados são persistidos 
+no banco de dados h2 em memória.
+- Após o final da leitura basta realizar as requisições, ressaltando que as requisições dos itens 4, 10 e 11 
+do desafio retornam um número inteiro e não um JSON.
+- O item 9 do desafio não foi concluído.
