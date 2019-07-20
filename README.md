@@ -12,8 +12,8 @@ A empresa XPTO Systems precisa construir um sistema web para leitura e manutenç
 6. Retornar o nome das cidades baseado em um estado selecionado; OK
 7. Permitir adicionar uma nova Cidade; OK
 8. Permitir deletar uma cidade; OK
-9. Permitir selecionar uma coluna (do CSV) e através dela entrar com uma string para filtrar. retornar assim todos os objetos que contenham tal string; 
-10. Retornar a quantidade de registro baseado em uma coluna. Não deve contar itens iguais; 
+9. Permitir selecionar uma coluna (do CSV) e através dela entrar com uma string para filtrar. Retornar assim todos os objetos que contenham tal string; 
+10. Retornar a quantidade de registro baseado em uma coluna. Não deve contar itens iguais; OK
 11. Retornar a quantidade de registros total; OK
 12. Dentre todas as cidades, obter as duas cidades mais distantes uma da outra com base na localização (distância em KM em linha reta); OK
 

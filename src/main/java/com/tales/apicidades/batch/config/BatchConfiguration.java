@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-
 import com.tales.apicidades.batch.listener.JobCompletionNotificationListener;
 import com.tales.apicidades.batch.model.CityIO;
 import com.tales.apicidades.processor.CityItemProcessor;
+import com.tales.apicidades.service.impl.CityService;
 
 /**
  * 
@@ -40,6 +40,9 @@ public class BatchConfiguration {
 	
 	@Autowired
 	public DataSource dataSource;
+	
+	@Autowired
+	public CityService cityService;
 	
 	@Bean
     public FlatFileItemReader<CityIO> reader() {
@@ -99,6 +102,5 @@ public class BatchConfiguration {
                 .writer(writer())
                 .build();
     }
-	
 	
 }

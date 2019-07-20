@@ -1,19 +1,30 @@
 package com.tales.apicidades.batch.model;
 
-import java.lang.reflect.Field;
+import com.opencsv.bean.CsvBindByPosition;
 
 public class CityIO {
 
+	@CsvBindByPosition(position = 0)
 	private String id;
+	@CsvBindByPosition(position = 1)
 	private String ibge_id;
+	@CsvBindByPosition(position = 2)
 	private String uf;
+	@CsvBindByPosition(position = 3)
 	private String name;
+	@CsvBindByPosition(position = 4)
 	private boolean capital;
+	@CsvBindByPosition(position = 5)
 	private String lon;
+	@CsvBindByPosition(position = 6)
 	private String lat;
+	@CsvBindByPosition(position = 7)
 	private String no_accents;
+	@CsvBindByPosition(position = 8)
 	private String alternative_names;
+	@CsvBindByPosition(position = 9)
 	private String microregion;
+	@CsvBindByPosition(position = 10)
 	private String mesoregion;
 	
 	public CityIO() {

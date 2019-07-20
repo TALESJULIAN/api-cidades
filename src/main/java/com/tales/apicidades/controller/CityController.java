@@ -123,6 +123,12 @@ public class CityController {
 		}
 	}
 	
+	@GetMapping(value = "/getByColumnValue/column/{column}/value/{value}")
+	@ResponseBody
+	public Integer getQtdeRecordsByColumn(@PathVariable("column") String column, @PathVariable("value") String value) {
+		return this.cityService.getCitiesByColumnValue(column, value);
+	}
+	
 	@GetMapping(value = "/getMaxDistance")
 	@ResponseBody
 	public List<City> getMaxDistance(){
