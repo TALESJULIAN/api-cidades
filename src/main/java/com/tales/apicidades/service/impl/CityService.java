@@ -1,6 +1,6 @@
 package com.tales.apicidades.service.impl;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,19 @@ import com.tales.apicidades.service.interfaces.ICityService;
 @Service
 public class CityService implements ICityService{
 	
-	private LinkedHashMap<City, City> mapCityMaxDistance;
+	private List<City> listCityMaxDistance;
 	
-	private LinkedHashMap<City, City> mapCityMinDistance;
+	private List<City> listCityMinDistance;
 	
 	private Double maxDistance;
 	
 	private Double minDistance;
+	
+	@Autowired
+	private StateDTO stateMaxCities;
+	
+	@Autowired
+	private StateDTO stateMinCities;
 	
 	@Autowired
 	private StateDTO stateDto;
@@ -41,12 +47,12 @@ public class CityService implements ICityService{
 	
 	@Autowired
 	private City city2;
-	
+
 	public CityService() {
 		setCity1(new City());
 		setCity2(new City());
-		this.mapCityMaxDistance = new LinkedHashMap<>();
-		this.mapCityMinDistance = new LinkedHashMap<>();			
+		this.listCityMaxDistance = new ArrayList<>();
+		this.listCityMinDistance = new ArrayList<>();
 	}
 
 	@Override
@@ -56,13 +62,60 @@ public class CityService implements ICityService{
 
 	@Override
 	public StateDTO getMaxUfState() {
-		return this.getMaxUfState();
+		this.stateMaxCities = null;
+		List<City> cities = this.cityRepository.findByCapital(Boolean.TRUE);
+		List<StateDTO> states = new ArrayList<>();
+		for(City city : cities) {
+			StateDTO stateDto = new StateDTO();
+			stateDto.setUf(city.getUf());
+			states.add(stateDto);
+		}
+		if(!states.isEmpty()) {
+			for(StateDTO state : states) {
+				state.setNumberOfCities(this.cityRepository.countByUf(state.getUf()));
+				if(this.stateMaxCities == null || this.stateMaxCities.getNumberOfCities() == null) {
+					this.stateMaxCities = state;
+					System.out.println(this.stateMaxCities.toString());
+				}
+				else {
+					if(this.stateMaxCities.getNumberOfCities() < state.getNumberOfCities()) {
+						this.stateMaxCities = state;
+						System.out.println(this.stateMaxCities.toString());
+					}
+				}
+			}
+		}
+		return this.stateMaxCities;
 	}
 
 	@Override
 	public StateDTO getMinUfState() {
-		// TODO Auto-generated method stub
-		return null;
+		this.stateMinCities = null;
+		List<City> cities = this.cityRepository.findByCapital(Boolean.TRUE);
+		List<StateDTO> states = new ArrayList<>();
+		for(City city : cities) {
+			StateDTO stateDto = new StateDTO();
+			stateDto.setUf(city.getUf());
+			states.add(stateDto);
+		}
+		if(!states.isEmpty()) {
+			for(StateDTO state : states) {
+				System.out.println(state.toString());
+				state.setNumberOfCities(this.cityRepository.countByUf(state.getUf()));
+				if(this.stateMinCities == null || this.stateMinCities.getNumberOfCities() == null) {
+					this.stateMinCities = state;
+					System.out.println(this.stateMinCities.toString());
+				}
+				else {
+					if(this.stateMinCities.getNumberOfCities() > state.getNumberOfCities()) {
+						this.stateMinCities = state;
+						System.out.println(this.stateMinCities.toString());
+					}
+				}
+			}
+		}
+		
+		return this.stateMinCities;
 	}
 
 	@Override
@@ -117,43 +170,61 @@ public class CityService implements ICityService{
 	}
 	
 	@Override
-	public void getDistance(City city1, City city2) {
-		GeoCoordinateDTO cityOne = new GeoCoordinateDTO(city1.getLat(),
-				city1.getLon());
-		GeoCoordinateDTO cityTwo = new GeoCoordinateDTO(city2.getLat(), city2.getLon());
-				double distance = cityOne.distanceInKm(cityTwo);
-		//Set max distance 
-		if(this.maxDistance == null || this.maxDistance == 0) {
-			this.maxDistance = distance;
-			if(this.mapCityMaxDistance.isEmpty()) {
-				this.mapCityMaxDistance.put(city1, city2);
+	public void getDistance() {
+		City city1 = new City();
+		City city2 = new City();
+		
+		List<City> cities = this.cityRepository.findAll();
+		
+		city1 = cities.get(0);
+		
+		for(int i = 0; i < cities.size(); i++) {
+			city1 = cities.get(i);
+			for(int j = (i+1); j < cities.size(); j++) {
+				city2 = cities.get(j);
+				GeoCoordinateDTO cityOne = new GeoCoordinateDTO(city1.getLat(),
+						city1.getLon());
+				GeoCoordinateDTO cityTwo = new GeoCoordinateDTO(city2.getLat(), city2.getLon());
+						double distance = cityOne.distanceInKm(cityTwo);
+				//Set max distance 
+				if(this.maxDistance == null || this.maxDistance == 0) {
+					this.maxDistance = distance;
+					if(this.listCityMaxDistance.isEmpty()) {
+						this.listCityMaxDistance.add(city1);
+						this.listCityMaxDistance.add(city2);
+					}
+				}
+				else {
+					if(distance > this.maxDistance) {
+						this.maxDistance = distance;
+						this.listCityMaxDistance.clear();
+						this.listCityMaxDistance.add(city1);
+						this.listCityMaxDistance.add(city2);
+					}
+				}
+				//Set min distance
+				if(this.minDistance == null || this.minDistance == 0) {
+					this.minDistance = distance;
+					if(this.listCityMinDistance.isEmpty()) {
+						this.listCityMinDistance.add(city1);
+						this.listCityMinDistance.add(city2);
+					}
+				}
+				else {
+					if(distance < this.minDistance) {
+						this.minDistance = distance;
+						this.listCityMinDistance.clear();
+						this.listCityMinDistance.add(city1);
+						this.listCityMinDistance.add(city2);
+					}
+				}
 			}
+			
 		}
-		else {
-			if(distance > this.maxDistance) {
-				this.maxDistance = distance;
-				this.mapCityMaxDistance.clear();
-				this.mapCityMaxDistance.put(city1, city2);
-			}
-		}
-		//Set min distance
-		if(this.minDistance == null || this.minDistance == 0) {
-			this.minDistance = distance;
-			if(this.mapCityMinDistance.isEmpty()) {
-				this.mapCityMinDistance.put(city1, city2);
-			}
-		}
-		else {
-			if(distance > this.minDistance) {
-				this.minDistance = distance;
-				this.mapCityMinDistance.clear();
-				this.mapCityMinDistance.put(city1, city2);
-			}
-		}
+		System.out.println("Distacia mínima = " + this.minDistance);
+		System.out.println("Distancia máxima = " + this.maxDistance);
 	}
 
-	
-	
 	/**
 	 * @return the maxDistance
 	 */
@@ -227,7 +298,35 @@ public class CityService implements ICityService{
 	}
 	
 	/**
-	 * 
+	 * @return the listCityMaxDistance
+	 */
+	public List<City> getListCityMaxDistance() {
+		return listCityMaxDistance;
+	}
+
+	/**
+	 * @param listCityMaxDistance the listCityMaxDistance to set
+	 */
+	public void setListCityMaxDistance(List<City> listCityMaxDistance) {
+		this.listCityMaxDistance = listCityMaxDistance;
+	}
+
+	/**
+	 * @return the listCityMinDistance
+	 */
+	public List<City> getListCityMinDistance() {
+		return listCityMinDistance;
+	}
+
+	/**
+	 * @param listCityMinDistance the listCityMinDistance to set
+	 */
+	public void setListCityMinDistance(List<City> listCityMinDistance) {
+		this.listCityMinDistance = listCityMinDistance;
+	}
+
+	/**
+	 * Convert City entity into CityDTO
 	 * @param city
 	 * @return cityDTO
 	 */
@@ -246,5 +345,27 @@ public class CityService implements ICityService{
 		
 		return cityDto;
 	}
+	
+	/**
+	 * Convert CityDTO into City Entity
+	 * @param cityDto
+	 * @return city
+	 */
+	public City convertCityDto(CityDTO cityDto) {
+		City city = new City();
+		city.setIbge_id(cityDto.getIbge_id());
+		city.setName(cityDto.getName());
+		city.setUf(cityDto.getUf());
+		city.setCapital(cityDto.getCapital());
+		city.setLat(cityDto.getLat());
+		city.setLon(cityDto.getLon());
+		city.setAlternative_names(cityDto.getAlternative_names());
+		city.setNo_accents(cityDto.getNo_accents());
+		city.setMesoregion(cityDto.getMesoregion());
+		city.setMicroregion(cityDto.getMicroregion());
+		
+		return city;
+	}
+	
 	
 }

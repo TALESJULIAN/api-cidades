@@ -8,7 +8,7 @@ package com.tales.apicidades.dtos;
 public class StateDTO {
 
 	private String uf;
-	private Integer numberOfCities;
+	private Long numberOfCities;
 	
 	public StateDTO() {
 		
@@ -19,7 +19,7 @@ public class StateDTO {
 	 * @param uf
 	 * @param numberOfCities
 	 */
-	public StateDTO(String uf, Integer numberOfCities) {
+	public StateDTO(String uf, Long numberOfCities) {
 		super();
 		this.uf = uf;
 		this.numberOfCities = numberOfCities;
@@ -39,13 +39,13 @@ public class StateDTO {
 	/**
 	 * @return the numberOfCities
 	 */
-	public Integer getNumberOfCities() {
+	public Long getNumberOfCities() {
 		return numberOfCities;
 	}
 	/**
 	 * @param numberOfCities the numberOfCities to set
 	 */
-	public void setNumberOfCities(Integer numberOfCities) {
+	public void setNumberOfCities(Long numberOfCities) {
 		this.numberOfCities = numberOfCities;
 	}
 

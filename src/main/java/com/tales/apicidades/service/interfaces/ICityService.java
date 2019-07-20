@@ -36,5 +36,5 @@ public interface ICityService {
 	
 	Integer getQtdeRecords();
 	
-	void getDistance(City city1, City city2);
+	void getDistance();
 }

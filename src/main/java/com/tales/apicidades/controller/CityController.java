@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tales.apicidades.dtos.CityDTO;
+import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
+import com.tales.apicidades.response.Response;
 import com.tales.apicidades.service.impl.CityService;
 
 /**
@@ -53,6 +59,28 @@ public class CityController {
 		return citiesDto;
 	}
 	
+	@GetMapping(value = "/getMaxCitiesPerState")
+	@ResponseBody
+	public StateDTO getMaxCitiesPerState() {
+		StateDTO stateDto = new StateDTO();
+		stateDto = this.cityService.getMaxUfState();
+		return stateDto;
+	}
+	
+	@GetMapping(value = "/getMinCitiesPerState")
+	@ResponseBody
+	public StateDTO getMinCitiesPerState() {
+		StateDTO stateDto = new StateDTO();
+		stateDto = this.cityService.getMinUfState();
+		return stateDto;
+	}
+	
+	@GetMapping(value = "/getQtdeByUf/{uf}")
+	@ResponseBody
+	public Integer getQtdeByUf(@PathVariable("uf") String uf) {
+		return this.cityService.getNumberCitiesPerState(uf);
+	}
+	
 	@GetMapping(value = "/getByIbge/{ibge_id}")
 	@ResponseBody
 	public CityDTO getCityByIbgeId(@PathVariable("ibge_id") Integer ibgeId) {
@@ -82,6 +110,23 @@ public class CityController {
 		return this.cityService.getQtdeRecords();
 	}
 	
+	@PostMapping
+	public ResponseEntity<Response<CityDTO>> adicionar(@Valid @RequestBody CityDTO cityDto,
+			BindingResult result) throws ParseException {
+		log.info("Adicionando lançamento: {}", cityDto.toString());
+		Response<CityDTO> response = new Response<CityDTO>();
+		City city = this.cityService.convertCityDto(cityDto);
+
+		if (result.hasErrors()) {
+			log.error("Erro validando cidade: {}", result.getAllErrors());
+			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		city = this.cityService.saveCity(city);
+		response.setData(this.cityService.convertCity(city));
+		return ResponseEntity.ok(response);
+	}
 	
 	@DeleteMapping(value = "/delete/{ibge_id}")
 	public String deleteCityByIbgeId(@PathVariable("ibge_id") Integer ibgeId) {
@@ -94,5 +139,22 @@ public class CityController {
 		}
 	}
 	
+	@GetMapping(value = "/getMaxDistance")
+	@ResponseBody
+	public List<City> getMaxDistance(){
+		List<City> cities = new ArrayList<>();
+		this.cityService.getDistance();
+		cities = this.cityService.getListCityMaxDistance();
+		return cities;
+	}
+	
+	@GetMapping(value = "/getMinDistance")
+	@ResponseBody
+	public List<City> getMinDistance(){
+		List<City> cities = new ArrayList<>();
+		this.cityService.getDistance();
+		cities = this.cityService.getListCityMinDistance();
+		return cities;
+	}
 	
 }
