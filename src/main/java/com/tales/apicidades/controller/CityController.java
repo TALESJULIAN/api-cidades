@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tales.apicidades.dtos.CityDTO;
 import com.tales.apicidades.dtos.StateDTO;
 import com.tales.apicidades.entity.City;
-import com.tales.apicidades.response.Response;
 import com.tales.apicidades.service.impl.CityService;
 
 /**
@@ -95,6 +90,7 @@ public class CityController {
 	@ResponseBody
 	public List<CityDTO> getCitiesByUf(@PathVariable("uf") String uf) {
 		List<CityDTO> citiesDto = new ArrayList<CityDTO>();
+		log.info("Getting uf: {}", uf);
 		List<City> cities = this.cityService.getCitiesPerState(uf);
 		for(City city : cities) {
 			CityDTO cityDto = new CityDTO();
@@ -110,22 +106,10 @@ public class CityController {
 		return this.cityService.getQtdeRecords();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Response<CityDTO>> adicionar(@Valid @RequestBody CityDTO cityDto,
-			BindingResult result) throws ParseException {
-		log.info("Adicionando lançamento: {}", cityDto.toString());
-		Response<CityDTO> response = new Response<CityDTO>();
+	@PostMapping(path = "/addCity")
+	public City addCity(@RequestBody CityDTO cityDto) {
 		City city = this.cityService.convertCityDto(cityDto);
-
-		if (result.hasErrors()) {
-			log.error("Erro validando cidade: {}", result.getAllErrors());
-			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-			return ResponseEntity.badRequest().body(response);
-		}
-
-		city = this.cityService.saveCity(city);
-		response.setData(this.cityService.convertCity(city));
-		return ResponseEntity.ok(response);
+		return this.cityService.saveCity(city);
 	}
 	
 	@DeleteMapping(value = "/delete/{ibge_id}")
@@ -143,6 +127,7 @@ public class CityController {
 	@ResponseBody
 	public List<City> getMaxDistance(){
 		List<City> cities = new ArrayList<>();
+		log.info("Getting max distance...");
 		this.cityService.getDistance();
 		cities = this.cityService.getListCityMaxDistance();
 		return cities;
@@ -152,6 +137,7 @@ public class CityController {
 	@ResponseBody
 	public List<City> getMinDistance(){
 		List<City> cities = new ArrayList<>();
+		log.info("Getting min distance...");
 		this.cityService.getDistance();
 		cities = this.cityService.getListCityMinDistance();
 		return cities;

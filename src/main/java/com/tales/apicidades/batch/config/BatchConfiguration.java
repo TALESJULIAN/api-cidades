@@ -50,12 +50,13 @@ public class BatchConfiguration {
             {
             setLineTokenizer(new DelimitedLineTokenizer() {
                 {
-                setNames(new String[]{"ibge_id", "uf", "name", "capital", "lon", "lat", "no_accents", "alternative_names", "microregion", "mesoregion"});
+                	setNames(new String[]{"ibge_id", "uf", "name", "capital", "lon", "lat"
+                			, "no_accents", "alternative_names", "microregion", "mesoregion"});
                 }
             });
             setFieldSetMapper(new BeanWrapperFieldSetMapper<CityIO>() {
                 {
-                setTargetType(CityIO.class);
+                	setTargetType(CityIO.class);
                 }
             });
             }
@@ -98,4 +99,6 @@ public class BatchConfiguration {
                 .writer(writer())
                 .build();
     }
+	
+	
 }

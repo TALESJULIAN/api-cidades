@@ -1,5 +1,7 @@
 package com.tales.apicidades.batch.model;
 
+import java.lang.reflect.Field;
+
 public class CityIO {
 
 	private String id;

@@ -1,9 +1,23 @@
 package com.tales.apicidades.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import com.opencsv.CSVReader;
+import com.tales.apicidades.batch.listener.JobCompletionNotificationListener;
+import com.tales.apicidades.batch.model.CityIO;
 import com.tales.apicidades.dtos.CityDTO;
 import com.tales.apicidades.dtos.GeoCoordinateDTO;
 import com.tales.apicidades.dtos.StateDTO;
@@ -47,6 +61,8 @@ public class CityService implements ICityService{
 	
 	@Autowired
 	private City city2;
+	
+	private static final Logger log = LoggerFactory.getLogger(CityService.class);
 
 	public CityService() {
 		setCity1(new City());
@@ -135,7 +151,8 @@ public class CityService implements ICityService{
 
 	@Override
 	public City saveCity(City city) {
-		return this.cityRepository.save(city);
+		this.cityRepository.save(city);
+		return city;
 	}
 
 	@Override
@@ -224,6 +241,51 @@ public class CityService implements ICityService{
 		System.out.println("Distacia mínima = " + this.minDistance);
 		System.out.println("Distancia máxima = " + this.maxDistance);
 	}
+	
+	/**
+	 * 
+	 * @param column
+	 * @param value
+	 * @return cities
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
+	 */
+	public List<City> filterCsv(String column, String value) throws NoSuchFieldException, SecurityException {
+		 List<CityIO> citiesIo = new ArrayList<>();
+		 List<City> cities = new ArrayList<>();
+		 FileInputStream fileInput = null;
+
+	     try {
+	            String fileName = "src/main/resources/Desafio Cidades - Back End.csv";
+
+	            fileInput = new FileInputStream(new File(fileName));
+	            @SuppressWarnings("resource")
+				CSVReader reader = new CSVReader(new InputStreamReader(fileInput));
+	            String[] nextLine;
+	            reader.readNext();
+	            
+	         while ((nextLine = reader.readNext()) != null) {
+	        	 List fields = new ArrayList<String>();
+	             CityIO cityIo = new CityIO();
+	             if(cityIo.getClass().getDeclaredField(column) != null) {
+	            	 	
+	                	if(nextLine[1].contains(value)) {
+	                		citiesIo.add(cityIo);
+	                	}
+	             }
+	             else {
+	              	
+	             }
+	         }
+
+	     } catch (FileNotFoundException ex) {
+	            log.info("File not found!");
+	        } catch (IOException ex) {
+	            log.info("I/O Error");
+	     }
+	     return cities;
+	    }
+		
 
 	/**
 	 * @return the maxDistance
@@ -368,4 +430,19 @@ public class CityService implements ICityService{
 	}
 	
 	
+	public City convertCityIO(CityIO cityIo) {
+		City city = new City();
+		city.setIbge_id(Integer.parseInt(cityIo.getIbge_id()));
+		city.setName(cityIo.getName());
+		city.setUf(cityDto.getUf());
+		city.setCapital(cityDto.getCapital());
+		city.setLat(cityDto.getLat());
+		city.setLon(cityDto.getLon());
+		city.setAlternative_names(cityDto.getAlternative_names());
+		city.setNo_accents(cityDto.getNo_accents());
+		city.setMesoregion(cityDto.getMesoregion());
+		city.setMicroregion(cityDto.getMicroregion());
+		return city;
+	}
+		
 }
