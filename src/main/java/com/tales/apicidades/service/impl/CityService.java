@@ -2,13 +2,11 @@ package com.tales.apicidades.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.tales.apicidades.batch.model.CityIO;
 import com.tales.apicidades.dtos.CityDTO;
 import com.tales.apicidades.dtos.CitySpecification;
@@ -235,8 +233,6 @@ public class CityService implements ICityService{
 			}
 			
 		}
-		System.out.println("Distacia mínima = " + this.minDistance);
-		System.out.println("Distancia máxima = " + this.maxDistance);
 	}
 	
 	/**
