@@ -254,6 +254,7 @@ public class CityService implements ICityService{
 		}
 	}
 	
+	
 	/**
 	 * @return the maxDistance
 	 */

@@ -29,4 +29,5 @@ Especificações do projeto:
 no banco de dados h2 em memória.
 - Após o final da leitura basta realizar as requisições, ressaltando que as requisições dos itens 4, 10 e 11 
 do desafio retornam um número inteiro e não um JSON.
+
 - O item 9 do desafio não foi concluído.

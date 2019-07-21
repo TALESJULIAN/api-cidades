@@ -116,7 +116,7 @@ public class CityController {
 	public String deleteCityByIbgeId(@PathVariable("ibge_id") Integer ibgeId) {
 		if (!this.cityService.removeCity(ibgeId)) {
 			log.info("Ibge id : {} not found.", ibgeId);
-			return "Cidade não encontrada";
+			return "Código IBGE não encontrado!";
 		}
 		else {
 			return "Cidade deletada com sucesso!";

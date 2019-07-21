@@ -8,6 +8,11 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 import com.tales.apicidades.entity.City;
 
+/**
+ * 
+ * @author Tales
+ *
+ */
 public class CitySpecification implements Specification<City>{
 	
     private String randomColumnName; // Column name
